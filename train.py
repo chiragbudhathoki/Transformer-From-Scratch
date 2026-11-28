@@ -68,7 +68,7 @@ def parse_args():
 def load_tokens(path):
     if os.path.splitext(path)[1].lower() == ".npy":
         return np.load(path, mmap_mode="r")
-    # Raw binary: must have been written as uint16 by your tokenization script.
+  
     return np.memmap(path, dtype=np.uint16, mode="r")
 
 
@@ -102,7 +102,7 @@ def main():
         theta=args.rope_theta,
     ).to(device)
 
-    # Assumes your AdamW accepts `betas` and `eps` keyword arguments.
+    
     optimizer = AdamW(
         model.parameters(),
         lr=args.max_lr,
@@ -142,7 +142,6 @@ def main():
             print(f"step {step}: validation loss {val_loss:.4f}")
 
         # Training step
-        # Training step
         x, y = get_batch(train_data, args.batch_size, args.context_length, device)
         optimizer.zero_grad()
         with torch.amp.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=(device.type == "cuda")):
@@ -179,4 +178,4 @@ if __name__ == "__main__":
     main()
 
 
-#test
+
